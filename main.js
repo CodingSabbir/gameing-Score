@@ -14,7 +14,19 @@
     let p2_score=0;
     let p1_Trun=true;
     let p2_Trun=false;
-    
+    let winingScore = 10;
+    let isGameOver=false
+
+    // function resetValue(){
+    // p1_score=0;
+    // p2_score=0;
+    // p1_Trun=true;
+    // p2_Trun=false;
+    // winingScore = 10;
+    // isGameOver=false
+    // }
+    // resetValue()
+
     const inputValidation=(inputVal)=>{
         let isValid = false;
         // NaN !== NaN && result true if value is not  real number
@@ -31,13 +43,31 @@
         input.value ='';
     }
     
-    
+    const setDom=()=>{
+        p1_score.textContent=p1_score
+        p2_score.textContent=p2_score
+        winingScore.textContent=winingScore
+        if(!p1_Trun){
+            player_1.setAttribute('disabled','disabled')
+        }
+        if(!p2_Trun){
+            player_2.setAttribute('disabled','disabled')
+        }
+    }
+
+    const disabledButton=()=>{
+        player_1.setAttribute('disabled','disabled')
+        player_2.setAttribute('disabled','disabled')
+    }
+
+
     form.addEventListener('submit',(e)=>{
     e.preventDefault();
     const inputVal=Number(input.value)
     const isValid=inputValidation(inputVal)
     if(isValid) return
     resetButton()
+    winingScore=inputVal
     wining_Score.textContent =inputVal
     })
 
@@ -52,7 +82,14 @@
 
         p2_Trun=true
         player_2.removeAttribute('disabled','disabled')
+
+        if(p1_score ===winingScore ){
+            isGameOver=true
+            pl_Winner.textContent='Player 1 is the winner'
+            disabledButton()
+        }
     })
+
 
     player_2.addEventListener('click',(e)=>{
         if(p2_Trun){
@@ -64,4 +101,13 @@
 
         p1_Trun=true
         player_1.removeAttribute('disabled','disabled')
+
+        if(p2_score ===winingScore ){
+            isGameOver=true
+            pl_Winner.textContent='Player 2 is the winner'
+            disabledButton()
+        }
      })
+
+
+  
